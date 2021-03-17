@@ -17,7 +17,11 @@ values (1, 'Peter', 'Parker', 'pparker@gmail.com', '79095438798', '2015-01-01', 
        (2, 'Ivan', 'Petrov', 'petrov@gmail.com', '79095438438', '2015-03-01', 'man1', 11000, 1),
        (3, 'Mike', 'Smith', 'smith@gmail.com', '79665438798', '2017-07-07', 'hr1', 2000, 2),
        (4, 'John', 'Travolta', 'travol@gmail.com', '79067438798', '2016-04-04', 'dev1', 4000, 2),
-       (5, 'Egor', 'Letov', 'el@go.com', '9888-12-23', '2016-05-01', 'devops1', 3000, 2);
+       (5, 'Egor', 'Letov', 'el@go.com', '9888-12-23', '2016-05-01', 'devops1', 3000, 2),
+       (6, 'Nick', 'Twen', 'nt@go.com', '9888-14-23', '2017-05-09', 'dev2', 2000, 4),
+       (7, 'Mikita', 'Grew', 'mikitos@go.com', '9888-15-23', '2019-11-03', 'dev2', 2000, 4),
+       (8, 'Nikita', 'Gorn', 'norn@go.com', '9884-15-23', '2020-11-03', 'dev1', 4000, 4),
+       (9, 'Serg', 'Spilberg', 'spserg@go.com', '98843-15-23', '2020-11-03', 'dev1', 4000, 4);
 
 insert into departments(department_id, department_name, manager_id, location_id)
 values (1, 'Developers', 4, 1),
@@ -43,6 +47,14 @@ where employee_id = 4;
 update employee
 set department_id = 1
 where employee_id = 5;
+
+update employee
+set department_id = 1
+where employee_id = 6;
+
+update employee
+set department_id = 1
+where employee_id = 7;
 
 insert into job_history(employee_id, start_date, end_date, job_id, department_id)
 values (1, '2015-01-01', '2015-12-01', 'hr1', 3),

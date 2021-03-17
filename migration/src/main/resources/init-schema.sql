@@ -2,13 +2,13 @@ create table locations
 (
     location_id    serial primary key,
     street_address varchar(40),
-    city           varchar(30)
+    city           varchar(30) not null
 );
 
 create table jobs
 (
     jobs_id    varchar(10) not null primary key,
-    job_title  varchar(35),
+    job_title  varchar(35) not null,
     min_salary int CHECK ( min_salary > 0 ),
     max_salary int CHECK ( max_salary > min_salary )
 );
@@ -16,7 +16,7 @@ create table jobs
 create table departments
 (
     department_id   serial primary key,
-    department_name varchar(30),
+    department_name varchar(30) not null ,
     manager_id      int unique,
     location_id     int,
     constraint location_id
@@ -26,10 +26,10 @@ create table departments
 
 create table job_history
 (
-    employee_id   int,
-    start_date    date,
-    end_date      date CHECK ( end_date > start_date ),
-    job_id        varchar(10) unique,
+    employee_id   int not null,
+    start_date    date not null,
+    end_date      date CHECK ( end_date > start_date ) not null,
+    job_id        varchar(10) unique not null,
     department_id int,
     constraint job_id
         foreign key (job_id)
@@ -40,11 +40,11 @@ create table employee
 (
     employee_id   serial primary key,
     first_name    varchar(20),
-    last_name     varchar(25),
-    email         varchar(25) unique,
+    last_name     varchar(25) not null,
+    email         varchar(25) unique not null,
     phone_number  varchar(20),
-    hire_date     date,
-    job_id        varchar(10),
+    hire_date     date not null,
+    job_id        varchar(10) not null,
     salary        int CHECK ( salary > 0 ),
     manager_id    int,
     department_id int,
