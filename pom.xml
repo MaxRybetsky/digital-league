@@ -25,6 +25,7 @@
     <module>some-app-dependencies-bom</module>
     <module>api</module>
     <module>dto</module>
+      <module>migration</module>
   </modules>
 
   <name>some_app</name>
