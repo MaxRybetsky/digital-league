@@ -16,35 +16,37 @@ create table jobs
 create table departments
 (
     department_id   serial primary key,
-    department_name varchar(30) not null ,
+    department_name varchar(30) not null,
     manager_id      int unique,
     location_id     int,
     constraint location_id
         foreign key (location_id)
             references locations (location_id)
+            on delete set null
 );
 
 create table job_history
 (
-    employee_id   int not null,
-    start_date    date not null,
+    employee_id   int                                  not null,
+    start_date    date                                 not null,
     end_date      date CHECK ( end_date > start_date ) not null,
-    job_id        varchar(10) unique not null,
+    job_id        varchar(10)                          not null,
     department_id int,
     constraint job_id
         foreign key (job_id)
             references jobs (jobs_id)
+            on delete set null
 );
 
 create table employee
 (
     employee_id   serial primary key,
     first_name    varchar(20),
-    last_name     varchar(25) not null,
+    last_name     varchar(25)        not null,
     email         varchar(25) unique not null,
     phone_number  varchar(20),
-    hire_date     date not null,
-    job_id        varchar(10) not null,
+    hire_date     date               not null,
+    job_id        varchar(10)        not null,
     salary        int CHECK ( salary > 0 ),
     manager_id    int,
     department_id int,
@@ -62,13 +64,15 @@ create table employee
 alter table departments
     add constraint manager_id
         foreign key (manager_id)
-            references employee (employee_id);
+            references employee (employee_id)
+            on delete set null;
 
 alter table job_history
     add primary key (employee_id, start_date),
     add constraint employee_id
         foreign key (employee_id)
-            references employee (employee_id),
+            references employee (employee_id)
+            on delete cascade,
     add constraint jobs_id
         foreign key (job_id)
             references jobs (jobs_id),
