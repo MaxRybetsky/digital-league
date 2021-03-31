@@ -76,4 +76,12 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
     </dependencies>
+    
+    <build>
+        <resources>
+            <resource>
+                <directory>../migration/src/main/resources</directory>
+            </resource>
+        </resources>
+    </build>
 </project>
