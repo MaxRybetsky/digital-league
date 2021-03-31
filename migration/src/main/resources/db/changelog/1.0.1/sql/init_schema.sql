@@ -1,11 +1,11 @@
-create table locations
+create table if not exists  locations
 (
     location_id    serial primary key,
     street_address varchar(40),
     city           varchar(30) not null
 );
 
-create table jobs
+create table if not exists  jobs
 (
     jobs_id    varchar(10) not null primary key,
     job_title  varchar(35) not null,
@@ -13,7 +13,7 @@ create table jobs
     max_salary int CHECK ( max_salary > min_salary )
 );
 
-create table departments
+create table if not exists departments
 (
     department_id   serial primary key,
     department_name varchar(30) not null,
@@ -25,7 +25,7 @@ create table departments
             on delete set null
 );
 
-create table job_history
+create table if not exists  job_history
 (
     employee_id   int                                  not null,
     start_date    date                                 not null,
@@ -38,7 +38,7 @@ create table job_history
             on delete set null
 );
 
-create table employee
+create table if not exists  employee
 (
     employee_id   serial primary key,
     first_name    varchar(20),
