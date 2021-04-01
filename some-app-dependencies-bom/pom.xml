@@ -99,6 +99,13 @@
                 <version>2.3.9</version>
             </dependency>
 
+            <!-- Open API UI -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>1.5.6</version>
+            </dependency>
+
             <!-- Tests -->
             <!-- JUnit 4 Tests -->
             <dependency>
