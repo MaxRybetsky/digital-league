@@ -76,14 +76,6 @@
                 <version>2.7.5</version>
             </dependency>
 
-            <!-- Mockito Testing -->
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>3.8.0</version>
-                <scope>test</scope>
-            </dependency>
-
             <!-- Spring Boot Dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -105,6 +97,23 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
                 <version>2.3.9</version>
+            </dependency>
+
+            <!-- Tests -->
+            <!-- JUnit 4 Tests -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Mockito Testing -->
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.8.0</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
