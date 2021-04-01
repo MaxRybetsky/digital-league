@@ -46,6 +46,5 @@ public class LocationServiceImpl implements LocationsService {
         LocationsEntity locationsEntity = modelMapper.map(location, LocationsEntity.class);
         locationsMapper.insert(locationsEntity);
         return getLocationById(locationsEntity.getLocationId());
-
     }
 }
