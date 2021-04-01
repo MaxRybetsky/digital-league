@@ -1,14 +1,10 @@
-package org.example.hrsample;
+package org.example.hrsample.entity;
 
 import lombok.Data;
 
-/**
- * Location Model.
- */
 @Data
-public class LocationsDto {
+public class LocationsEntity {
     private Integer locationId;
     private String streetAddress;
     private String city;
 }
-
