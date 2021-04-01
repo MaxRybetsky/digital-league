@@ -30,6 +30,12 @@
             <artifactId>dto</artifactId>
         </dependency>
 
+        <!-- DAO -->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>dao</artifactId>
+        </dependency>
+
         <!-- OkHttp -->
         <dependency>
             <groupId>com.squareup.okhttp</groupId>
@@ -75,8 +81,20 @@
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Model Mapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+        </dependency>
     </dependencies>
-    
+
     <build>
         <resources>
             <resource>
