@@ -21,6 +21,6 @@ public interface LocationsMapper {
 
     @Insert("insert into locations(street_address, city) VALUES " +
             "(#{streetAddress}, #{city})")
-    @Options(useGeneratedKeys = true, keyProperty = "locationsId")
+    @Options(useGeneratedKeys = true, keyProperty = "locationId")
     void insert(LocationsEntity entity);
 }
