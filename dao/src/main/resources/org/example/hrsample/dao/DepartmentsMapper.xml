@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.hrsample.dao.DepartmentsMapper">
+    <!--  Department Result Map -->
+    <resultMap id="DepartmentResultMap"
+               type="org.example.hrsample.entity.DepartmentEntity">
+        <id property="departmentId" column="department_id"/>
+        <result property="departmentName" column="department_name"/>
+        <association property="manager"
+                     javaType="org.example.hrsample.entity.EmployeeEntity"
+                     resultMap="ManagerResultMap"/>
+        <association property="location"
+                     javaType="org.example.hrsample.entity.LocationsEntity"
+                     resultMap="LocationsResultMap"/>
+    </resultMap>
+
+    <!--  Manager Result Map -->
+    <resultMap id="ManagerResultMap"
+               type="org.example.hrsample.entity.EmployeeEntity">
+        <id property="employeeId" column="employee_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+    </resultMap>
+
+    <!--  Locations Result Map -->
+    <resultMap id="LocationsResultMap"
+               type="org.example.hrsample.entity.LocationsEntity">
+        <id property="locationId" column="location_id"/>
+        <result property="streetAddress" column="street_address"/>
+        <result property="city" column="city"/>
+    </resultMap>
+
+    <insert id="insertDepartment"
+            useGeneratedKeys="true"
+            keyProperty="departmentId"
+            keyColumn="department_id"
+            parameterType="org.example.hrsample.entity.DepartmentEntity">
+        insert into departments (department_name, manager_id, location_id)
+        values (#{departmentName},
+                #{manager.employeeId,jdbcType=INTEGER},
+                #{location.locationId,jdbcType=INTEGER})
+    </insert>
+
+    <select id="findDepartmentById"
+            resultMap="DepartmentResultMap">
+        select d.*,
+               e.employee_id,
+               e.first_name,
+               e.last_name,
+               l.*
+        from departments d
+                     inner join employee e on e.employee_id = d.manager_id
+                     inner join locations l on l.location_id = d.location_id
+        where d.department_id = #{id}
+    </select>
+
+    <select id="getDepartmentsByNameAndManagerSurname"
+            resultMap="DepartmentResultMap">
+        select d.*,
+                e.employee_id,
+                e.first_name,
+                e.last_name,
+                l.*
+        from departments d
+                inner join employee e on e.employee_id = d.manager_id
+                inner join locations l on l.location_id = d.location_id
+        <where>
+            <if test="departmentName != null and departmentName != ''">
+                d.department_name like #{departmentName,jdbcType=VARCHAR}
+            </if>
+            <if test="managerSurname != null and managerSurname != ''">
+                and e.last_name like #{managerSurname,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateDepartment">
+        update departments
+        set department_name = #{departmentName},
+            manager_id      = #{manager.employeeId,jdbcType=INTEGER},
+            location_id     = #{location.locationId,jdbcType=INTEGER}
+        where department_id = #{departmentId}
+    </update>
+</mapper>
