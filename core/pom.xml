@@ -18,22 +18,26 @@
     <name>core</name>
 
     <dependencies>
+        <!-- Inner dependencies -->
         <!-- API -->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>api</artifactId>
         </dependency>
-
         <!-- DTO -->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>dto</artifactId>
         </dependency>
-
         <!-- DAO -->
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>dao</artifactId>
+        </dependency>
+        <!-- Entity -->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>entity</artifactId>
         </dependency>
 
         <!-- OkHttp -->
@@ -106,6 +110,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
+        <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
