@@ -1,14 +1,15 @@
 package org.example.hrsample.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import java.time.LocalDate;
 
+/**
+ * Employee's model.
+ */
 @Data
-@EqualsAndHashCode
-@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EmployeeDto {
     private Integer employeeId;
     private String firstName;
@@ -18,6 +19,6 @@ public class EmployeeDto {
     private LocalDate hireDate;
     private JobDto job;
     private Integer salary;
-    private EmployeeDto manager;
+    private ManagerDto manager;
     private DepartmentDto department;
 }
