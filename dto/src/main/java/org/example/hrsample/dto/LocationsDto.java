@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Schema(title = "Location data model")
 public class LocationsDto {
-    @Schema(title = "Location's ID", accessMode = Schema.AccessMode.READ_ONLY)
+    @Schema(title = "Location's ID")
     private Integer locationId;
 
     @Schema(title = "Street address of location")
