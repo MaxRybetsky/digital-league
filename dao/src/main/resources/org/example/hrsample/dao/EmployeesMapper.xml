@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.hrsample.dao.EmployeesMapper">
+    <!-- Employee Result Map -->
+    <resultMap id="EmployeeFullResultMap"
+               type="org.example.hrsample.entity.EmployeeEntity"
+               autoMapping="true">
+        <association property="job"
+                     javaType="org.example.hrsample.entity.JobEntity"
+                     resultMap="JobResultMap"/>
+        <association property="manager"
+                     javaType="org.example.hrsample.entity.EmployeeEntity"
+                     resultMap="org.example.hrsample.dao.DepartmentsMapper.ManagerResultMap"/>
+        <association property="department"
+                     javaType="org.example.hrsample.entity.DepartmentEntity"
+                     resultMap="org.example.hrsample.dao.DepartmentsMapper.DepartmentResultMap"/>
+    </resultMap>
+
+    <!-- Job Result Map -->
+    <resultMap id="JobResultMap" type="org.example.hrsample.entity.JobEntity">
+        <id column="jobs_id" property="jobsId"
+            jdbcType="VARCHAR" javaType="java.lang.String"/>
+        <result column="job_title" property="jobsTitle"/>
+        <result column="max_salary" property="maxSalary"/>
+        <result column="min_salary" property="minSalary"/>
+    </resultMap>
+
+    <select id="getEmployeeById"
+            resultMap="EmployeeFullResultMap">
+        select *,
+               m.manager_id,
+               m.first_name,
+               m.last_name
+        from employee e
+                     inner join jobs j on j.jobs_id = e.job_id
+                     inner join departments d on d.department_id = e.department_id
+                     inner join employee m on m.employee_id = e.manager_id
+                     inner join locations l on l.location_id = d.location_id
+        where e.employee_id = #{id}
+    </select>
+</mapper>
