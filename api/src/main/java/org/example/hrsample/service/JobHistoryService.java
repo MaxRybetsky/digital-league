@@ -10,8 +10,9 @@ import java.time.LocalDate;
 public interface JobHistoryService {
     /**
      * Saves job to history.
+     *
      * @param employeeDto Employee's job to save.
-     * @param endDate Last date of job.
+     * @param endDate     Last date of job.
      */
     void saveJobOfEmployee(EmployeeDto employeeDto, LocalDate endDate);
 }

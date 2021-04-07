@@ -1,6 +1,7 @@
 package org.example.hrsample.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.hrsample.dao.DepartmentsMapper;
 import org.example.hrsample.dto.DepartmentDto;
 import org.example.hrsample.dto.LocationsDto;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DepartmentsServiceImpl implements DepartmentsService {
     private final DepartmentsMapper departmentsMapper;
     private final EmployeesService employeesService;
