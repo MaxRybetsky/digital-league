@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.hrsample.dao.JobHistoryMapper">
+    <insert id="addJob">
+        insert into job_history(employee_id, start_date, end_date, job_id, department_id)
+        values (#{jobHistoryEntity.employeeId},
+                #{jobHistoryEntity.startDate},
+                #{jobHistoryEntity.endDate},
+                #{jobHistoryEntity.jobId},
+                #{jobHistoryEntity.departmentId})
+    </insert>
+
+    <select id="getLastJobDateByEmployeeId"
+            resultType="java.time.LocalDate">
+        select max(end_date)
+        from job_history
+        where employee_id = #{id}
+    </select>
+</mapper>
