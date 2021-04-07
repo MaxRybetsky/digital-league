@@ -9,3 +9,8 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+logging:
+  level:
+    org.example.hrsample.service: DEBUG
+    org.mybatis: TRACE
+    org.example.hrsample.dao: TRACE

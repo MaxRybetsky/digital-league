@@ -1,6 +1,7 @@
 package org.example.hrsample.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.hrsample.dao.JobHistoryMapper;
 import org.example.hrsample.dto.EmployeeDto;
 import org.example.hrsample.entity.JobHistoryEntity;
@@ -14,6 +15,7 @@ import java.util.Optional;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class JobHistoryServiceImpl implements JobHistoryService {
     private final JobHistoryMapper jobHistoryMapper;
 
@@ -24,6 +26,7 @@ public class JobHistoryServiceImpl implements JobHistoryService {
         LocalDate startDate = optionalLocalDate.orElseGet(employeeDto::getHireDate);
         JobHistoryEntity jobHistoryEntity = createJobHistory(employeeDto, startDate, endDate);
         jobHistoryMapper.addJob(jobHistoryEntity);
+        log.info("Created new note in job history for employee = {}", jobHistoryEntity.getEmployeeId());
     }
 
     private JobHistoryEntity createJobHistory(EmployeeDto employeeDto,

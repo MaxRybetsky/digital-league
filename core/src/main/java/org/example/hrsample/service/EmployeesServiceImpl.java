@@ -1,6 +1,7 @@
 package org.example.hrsample.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.hrsample.dao.EmployeesMapper;
 import org.example.hrsample.dto.EmployeeDto;
 import org.example.hrsample.entity.EmployeeEntity;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EmployeesServiceImpl implements EmployeesService {
     private final EmployeesMapper employeesMapper;
     private final JobHistoryService jobHistoryService;
@@ -34,6 +36,7 @@ public class EmployeesServiceImpl implements EmployeesService {
         }
         EmployeeEntity employeeEntity = modelMapper.map(employeeDto, EmployeeEntity.class);
         employeesMapper.saveEmployee(employeeEntity);
+        log.info("Add new employee with ID={}", employeeEntity.getEmployeeId());
         return getEmployeeById(employeeEntity.getEmployeeId());
     }
 
@@ -41,6 +44,7 @@ public class EmployeesServiceImpl implements EmployeesService {
     @Transactional(readOnly = true)
     public EmployeeDto getEmployeeById(Integer id) {
         EmployeeEntity employeeEntity = getEmployeeEntity(id);
+        log.debug("Get employee with ID={}", id);
         return modelMapper.map(employeeEntity, EmployeeDto.class);
     }
 
@@ -51,6 +55,7 @@ public class EmployeesServiceImpl implements EmployeesService {
         updateJobHistory(oldEmployeeEntity, employeeDto, LocalDate.now());
         EmployeeEntity employeeEntity = modelMapper.map(employeeDto, EmployeeEntity.class);
         employeesMapper.updateEmployee(employeeEntity);
+        log.info("Updated employee with ID={}", employeeEntity.getEmployeeId());
         return getEmployeeById(employeeEntity.getEmployeeId());
     }
 
@@ -61,9 +66,18 @@ public class EmployeesServiceImpl implements EmployeesService {
         List<EmployeeEntity> employeeEntities =
                 employeesMapper.getEmployeesByParameters(firstName, lastName, email,
                         startDate, endDate);
+        log.debug(
+                "Get employees with filters: {}, {}, {}, {}, {}",
+                firstName,
+                lastName,
+                email,
+                startDate,
+                endDate
+        );
         return modelMapper.map(
                 employeeEntities,
-                new TypeToken<List<EmployeeDto>>() {}.getType()
+                new TypeToken<List<EmployeeDto>>() {
+                }.getType()
         );
     }
 
