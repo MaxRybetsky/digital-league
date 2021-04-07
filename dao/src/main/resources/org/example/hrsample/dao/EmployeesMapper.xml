@@ -27,8 +27,11 @@
 
     <select id="getEmployeeById"
             resultMap="EmployeeFullResultMap">
-        select *,
-               m.manager_id,
+        select e.*,
+               j.*,
+               d.*,
+               l.*,
+               m.employee_id,
                m.first_name,
                m.last_name
         from employee e
@@ -37,5 +40,60 @@
                      inner join employee m on m.employee_id = e.manager_id
                      inner join locations l on l.location_id = d.location_id
         where e.employee_id = #{id}
+    </select>
+
+    <insert id="saveEmployee"
+            useGeneratedKeys="true"
+            keyProperty="employeeId"
+            keyColumn="employee_id"
+            parameterType="org.example.hrsample.entity.EmployeeEntity">
+        insert into employee (first_name, last_name,
+                              email, phone_number,
+                              hire_date, job_id,
+                              salary, manager_id,
+                              department_id)
+        values (#{firstName}, #{lastName},
+                #{email}, #{phoneNumber},
+                #{hireDate}, #{job.jobsId},
+                #{salary}, #{manager.employeeId},
+                #{department.departmentId})
+    </insert>
+
+    <update id="updateEmployee">
+        update employee
+        set first_name    = #{firstName},
+            last_name     = #{lastName},
+            email         = #{email},
+            phone_number  = #{phoneNumber},
+            salary        = #{salary},
+            hire_date     = #{hireDate},
+            job_id        = #{job.jobsId},
+            manager_id    = #{manager.employeeId},
+            department_id = #{department.departmentId}
+        where employee_id = #{employeeId}
+    </update>
+
+    <select id="getEmployeesByParameters" resultMap="EmployeeFullResultMap">
+        select * from employee e
+        left join departments d on e.employee_id = d.manager_id
+
+        <where>
+            <if test="firstName != null and firstName != ''">
+                e.first_name = #{firstName}
+            </if>
+            <if test="lastName != null and lastName != ''">
+                and e.last_name = #{lastName}
+            </if>
+            <if test="email != null and email != ''">
+                and e.email = #{email}
+            </if>
+            <if test="startDate != null">
+                and e.hire_date > #{startDate}
+            </if>
+            <if test="endDate != null">
+                and #{endDate} > e.hire_date
+            </if>
+        </where>
+        order by e.employee_id
     </select>
 </mapper>
