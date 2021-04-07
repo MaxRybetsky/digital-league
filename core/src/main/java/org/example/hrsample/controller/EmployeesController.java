@@ -1,5 +1,7 @@
 package org.example.hrsample.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.hrsample.dto.EmployeeDto;
 import org.example.hrsample.service.EmployeesService;
@@ -14,10 +16,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/employees")
 @RequiredArgsConstructor
+@Tag(name = "employees", description = "API for employees")
 public class EmployeesController {
     private final EmployeesService employeesService;
 
     @GetMapping
+    @Operation(summary = "Get Employees with specify filters")
     public List<EmployeeDto> getEmployees(
             @RequestParam(name = "firstName", required = false) String firstName,
             @RequestParam(name = "lastName", required = false) String lastName,
@@ -33,16 +37,19 @@ public class EmployeesController {
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Get Employee By its ID")
     public EmployeeDto getEmployeeById(@PathVariable Integer id) {
         return employeesService.getEmployeeById(id);
     }
 
     @PostMapping
+    @Operation(summary = "Add new employee")
     public EmployeeDto addNewEmployee(@RequestBody EmployeeDto employeeDto) {
         return employeesService.addNewEmployee(employeeDto);
     }
 
     @PutMapping
+    @Operation(summary = "Update Employee and save job change to history if it needs")
     public EmployeeDto updateEmployee(@RequestBody EmployeeDto employeeDto) {
         return employeesService.updateEmployeeData(employeeDto);
     }
