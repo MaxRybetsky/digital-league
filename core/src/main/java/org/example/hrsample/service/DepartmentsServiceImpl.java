@@ -3,6 +3,8 @@ package org.example.hrsample.service;
 import lombok.RequiredArgsConstructor;
 import org.example.hrsample.dao.DepartmentsMapper;
 import org.example.hrsample.dto.DepartmentDto;
+import org.example.hrsample.dto.LocationsDto;
+import org.example.hrsample.dto.ManagerDto;
 import org.example.hrsample.entity.DepartmentEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -80,8 +82,16 @@ public class DepartmentsServiceImpl implements DepartmentsService {
     }
 
     private boolean checkIfAllDepartmentPropertiesPresent(DepartmentDto departmentDto) {
-        employeesService.getEmployeeById(departmentDto.getManager().getEmployeeId());
-        locationsService.getLocationById(departmentDto.getLocation().getLocationId());
+        ManagerDto managerDto = departmentDto.getManager();
+        LocationsDto locationsDto = departmentDto.getLocation();
+        if(managerDto == null) {
+            throw new RuntimeException("Manager field shouldn't be null!");
+        }
+        if(locationsDto == null) {
+            throw new RuntimeException("Location field shouldn't be null!");
+        }
+        employeesService.getEmployeeById(managerDto.getEmployeeId());
+        locationsService.getLocationById(locationsDto.getLocationId());
         return true;
     }
 }
