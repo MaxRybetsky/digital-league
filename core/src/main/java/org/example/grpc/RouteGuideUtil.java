@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -33,8 +35,9 @@ public class RouteGuideUtil {
     /**
      * Gets the default features file from classpath.
      */
-    public static URL getDefaultFeaturesFile() {
-        return RouteGuideServer.class.getResource("route_guide_db.json");
+    public static URL getDefaultFeaturesFile() throws MalformedURLException {
+        String filePath = "src/main/resources/route_guide_db.json";
+        return Paths.get(filePath).toUri().toURL();
     }
 
     /**
