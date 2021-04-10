@@ -15,16 +15,28 @@
     <resultMap id="RoleMap" type="org.example.hrsample.entity.RoleEntity">
         <id property="id" column="id"/>
         <result property="name" column="role_name"/>
-        <collection property="permissions" ofType="java.lang.String"/>
+        <collection property="permissions"
+                    ofType="java.lang.String"
+                    select="selectPermissions"
+        />
     </resultMap>
 
-    <select id="getByLogin">
-        select * from usr u
-        inner join status s on s.id = u.status
-        inner join usr_roles ur on u.id = ur.usr_id
-        inner join roles r on r.id = ur.role_id
-        inner join roles_permissions rp on r.id = rp.role_id
-        inner join permissions p on p.id = rp.permission_id
+    <select id="getByLogin" resultMap="UserResultMap">
+        select *
+        from usr u
+                     inner join status s on s.id = u.status
+                     inner join usr_roles ur on u.id = ur.usr_id
+                     inner join roles r on r.id = ur.role_id
+        where u.login = #{login}
+    </select>
+
+    <select id="selectPermissions" resultType="java.lang.String">
+        select p.permission
+        from usr u
+                     inner join usr_roles ur on u.id = ur.usr_id
+                     inner join roles r on r.id = ur.role_id
+                     inner join roles_permissions rp on r.id = rp.role_id
+                     inner join permissions p on p.id = rp.permission_id
         where u.login = #{login}
     </select>
 </mapper>
