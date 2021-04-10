@@ -3,7 +3,6 @@ package org.example.hrsample.security;
 import lombok.RequiredArgsConstructor;
 import org.example.hrsample.dao.UserMapper;
 import org.example.hrsample.entity.UserEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +15,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        UserEntity userEntity = userMapper.getByLogin(username).orElseThrow(
+                () -> new UsernameNotFoundException("User doesn't exist")
+        );
+        return SecurityUser.fromUserEntity(userEntity);
     }
 }
