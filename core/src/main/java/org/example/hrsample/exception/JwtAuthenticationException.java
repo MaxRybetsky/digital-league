@@ -1,9 +1,11 @@
 package org.example.hrsample.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 import javax.naming.AuthenticationException;
 
+@Getter
 public class JwtAuthenticationException extends AuthenticationException {
     private HttpStatus httpStatus;
 
