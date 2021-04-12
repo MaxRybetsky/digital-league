@@ -1,6 +1,7 @@
 package org.example.hrsample.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.hrsample.dto.AuthenticationRequestDto;
 import org.example.hrsample.dto.UserDto;
 import org.example.hrsample.security.JwtTokenProvider;
@@ -24,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthenticationRestControllerV1 {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
@@ -42,10 +44,12 @@ public class AuthenticationRestControllerV1 {
             response.put("token", token);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
+            log.error(e.toString());
             return new ResponseEntity<>("Invalid credentials", HttpStatus.FORBIDDEN);
         }
     }
 
+    @PostMapping("/logout")
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
