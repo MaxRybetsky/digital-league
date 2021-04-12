@@ -1,6 +1,7 @@
 package org.example.hrsample.security;
 
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.example.hrsample.exception.JwtAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,10 @@ public class JwtTokenFilter extends GenericFilterBean {
         } catch (JwtAuthenticationException e) {
             SecurityContextHolder.clearContext();
             ((HttpServletResponse) servletResponse).sendError(e.getHttpStatus().value());
+            throw new JwtAuthenticationException("Token is invalid or expired!");
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
+
 }
