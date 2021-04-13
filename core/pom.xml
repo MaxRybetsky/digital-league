@@ -39,6 +39,11 @@
             <groupId>org.example</groupId>
             <artifactId>entity</artifactId>
         </dependency>
+        <!-- ActiveMQ -->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>active-mq</artifactId>
+        </dependency>
 
         <!-- OkHttp -->
         <dependency>
