@@ -14,3 +14,8 @@ logging:
     org.example.hrsample.service: DEBUG
     org.mybatis: TRACE
     org.example.hrsample.dao: TRACE
+#
+#jwt:
+#  header: Authorization
+#  secret: mysecret
+#  expiration: 604800
