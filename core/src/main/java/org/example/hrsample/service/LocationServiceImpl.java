@@ -3,7 +3,6 @@ package org.example.hrsample.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.hrsample.dao.LocationsMapper;
-import org.example.hrsample.dto.DepartmentDto;
 import org.example.hrsample.dto.LocationsDto;
 import org.example.hrsample.entity.LocationsEntity;
 import org.modelmapper.ModelMapper;
@@ -41,7 +40,7 @@ public class LocationServiceImpl implements LocationsService {
     public List<LocationsDto> getAll() {
         List<LocationsEntity> entities = locationsMapper.getAll();
         log.debug("Got all Location entities");
-        return modelMapper.map(entities, new TypeToken<List<DepartmentDto>>() {}.getType());
+        return modelMapper.map(entities, new TypeToken<List<LocationsDto>>() {}.getType());
 
     }
 
