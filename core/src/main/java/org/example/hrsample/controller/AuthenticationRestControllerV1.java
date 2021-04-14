@@ -2,6 +2,7 @@ package org.example.hrsample.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.hrsample.activemq.ActiveMQProducerService;
 import org.example.hrsample.dto.AuthenticationRequestDto;
 import org.example.hrsample.dto.UserDto;
 import org.example.hrsample.security.JwtTokenProvider;
@@ -30,6 +31,7 @@ public class AuthenticationRestControllerV1 {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserService userService;
+    private final ActiveMQProducerService activeMQProducer;
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDto request) {
@@ -42,9 +44,10 @@ public class AuthenticationRestControllerV1 {
             Map<Object, Object> response = new HashMap<>();
             response.put("login", login);
             response.put("token", token);
+            activeMQProducer.sendMessageToLog("Authorize person with login " + login);
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
-            log.error(e.toString());
+            activeMQProducer.sendMessageToLog("Can't authorize person!");
             return new ResponseEntity<>("Invalid credentials", HttpStatus.FORBIDDEN);
         }
     }
@@ -53,5 +56,6 @@ public class AuthenticationRestControllerV1 {
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
+        activeMQProducer.sendMessageToLog("Person logout.");
     }
 }
